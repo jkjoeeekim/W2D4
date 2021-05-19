@@ -6,7 +6,14 @@
 #
 # all_vowel_pairs(["goat", "action", "tear", "impromptu", "tired", "europe"])   # => ["action europe", "tear impromptu"]
 def all_vowel_pairs(words)
-
+    combos = words.combination(2).to_a
+    vowel_pairs = []
+    combos.each do |combo|
+        vowels = 'aeiou'
+        combo.join("").chars { |char| vowels.delete!(char) }
+        vowel_pairs << combo.join(" ") if vowels.empty?
+    end
+    vowel_pairs
 end
 
 
@@ -18,7 +25,7 @@ end
 # composite?(9)     # => true
 # composite?(13)    # => false
 def composite?(num)
-
+    (2...num).any? { |factor| num % factor == 0 }
 end
 
 
@@ -32,7 +39,7 @@ end
 # find_bigrams("the theater is empty", ["cy", "em", "ty", "ea", "oo"])  # => ["em", "ty", "ea"]
 # find_bigrams("to the moon and back", ["ck", "oo", "ha", "at"])        # => ["ck", "oo"]
 def find_bigrams(str, bigrams)
-
+    bigrams.select { |bigram| str.include?(bigram) }
 end
 
 class Hash
@@ -50,7 +57,8 @@ class Hash
     # hash_2.my_select { |k, v| k + 1 == v }      # => {10=>11, 5=>6, 7=>8})
     # hash_2.my_select                            # => {4=>4}
     def my_select(&prc)
-
+        prc ||= Proc.new { |k, v| k == v }
+        self.select { |k, v| prc.call(k, v) }
     end
 end
 
@@ -64,7 +72,11 @@ class String
     # "cats".substrings     # => ["c", "ca", "cat", "cats", "a", "at", "ats", "t", "ts", "s"]
     # "cats".substrings(2)  # => ["ca", "at", "ts"]
     def substrings(length = nil)
-
+        sub_strings = []
+        self.chars.each_with_index do |char, idx|
+            # self.
+        end
+        sub_strings
     end
 
 
