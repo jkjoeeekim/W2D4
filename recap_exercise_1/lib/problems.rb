@@ -72,11 +72,24 @@ class String
     # "cats".substrings     # => ["c", "ca", "cat", "cats", "a", "at", "ats", "t", "ts", "s"]
     # "cats".substrings(2)  # => ["ca", "at", "ts"]
     def substrings(length = nil)
+        length ||= 0
         sub_strings = []
-        self.chars.each_with_index do |char, idx|
-            # self.
+        chars = self.split("")
+        chars.each_with_index do |char, idx1|
+            sub_strings << char
+            new_word = []
+            (1...chars.length).each do |idx2|
+                word = self[idx1..(idx1 + idx2)]
+                new_word << word unless word.length < length
+            end
+            sub_strings.concat(new_word)
         end
-        sub_strings
+
+        if length > 0
+            sub_strings.uniq.select! { |ele| ele.length == length }
+        else
+            sub_strings.uniq
+        end
     end
 
 
@@ -90,6 +103,12 @@ class String
     # "bootcamp".caesar_cipher(2) #=> "dqqvecor"
     # "zebra".caesar_cipher(4)    #=> "difve"
     def caesar_cipher(num)
-
+        alpha = ('a'..'z').to_a
+        new_word = ""
+        self.chars.each_with_index do |char, idx|
+            new_idx = (alpha.index(char) + num) % 26
+            new_word += alpha[new_idx]
+        end
+        new_word
     end
 end
