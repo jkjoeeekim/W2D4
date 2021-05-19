@@ -4,6 +4,16 @@
 #
 # Solve this recursively!
 #
+
+def pow(base, exponent)
+    if exponent < 2
+        return 1 if exponent == 0
+        return base if exponent == 1
+    end
+    exponent -= 1
+    base * pow(base, exponent)
+end
+
 # Examples:
 #
 # pow(2, 0) # => 1
@@ -11,10 +21,6 @@
 # pow(2, 5) # => 32
 # pow(3, 4) # => 81
 # pow(4, 3) # => 64
-def pow(base, exponent)
-
-end
-
 
 # Write a method, lucas_number(n), that takes in a number.
 # The method should return the n-th number of the Lucas Sequence.
@@ -35,7 +41,11 @@ end
 # lucas_number(5)   # =>    11
 # lucas_number(9)   # =>    76
 def lucas_number(n)
+    lucas_numbers_sequence = [2, 1, 3]
 
+    return lucas_numbers_sequence[n] if n < 3
+   
+    lucas_number(n - 1) + lucas_number(n - 2)
 end
 
 
@@ -51,7 +61,9 @@ end
 # sum_array([5, 2])         # => 7
 # sum_array([4, 10, -1, 2]) # => 15
 def sum_array(array)
+    return 0 if array.empty?
 
+    array.shift + sum_array(array)
 end
 
 
@@ -67,7 +79,9 @@ end
 # reverse_string("internet")    # => "tenretni"
 # reverse_string("friends")     # => "sdneirf"
 def reverse_string(str)
-
+    return str if str.length < 2
+    reversed_str = str[-1]
+    reversed_str.concat(reverse_string(str.chop))
 end
 
 
@@ -100,5 +114,17 @@ end
 #     2-dimensional array: [['some data']]
 #     3-dimensional array: [[['some data']]]
 def flatten(data)
+    return [data] unless data.is_a?(Array)
 
+    flattened_arr = []
+    
+    data.each do |ele|
+        if ele.is_a?(Array)
+            flattened_arr.concat(flatten(ele))
+        else
+            flattened_arr << ele
+        end
+    end
+    
+    flattened_arr
 end
