@@ -117,14 +117,6 @@ def flatten(data)
     return [data] unless data.is_a?(Array)
 
     flattened_arr = []
-    
-    data.each do |ele|
-        if ele.is_a?(Array)
-            flattened_arr.concat(flatten(ele))
-        else
-            flattened_arr << ele
-        end
-    end
-    
+    data.each { |ele| flattened_arr.concat(flatten(ele)) }
     flattened_arr
 end
